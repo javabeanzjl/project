@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
 %>
@@ -47,13 +48,18 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				dataType: 'json',
 				type: 'post',
 				success: function (data) {
-					if (data.code = "1") {
+					if (data.code == "1") {
 						// 登录成功，跳转到业务主页面
 						window.location.href="workbench/index.do";
 					} else {
 						// 提示信息
 						$("#msg").text(data.message);
 					}
+				},
+				beforeSend: function () {
+					// ajax发送请求之前执行此函数
+					$("#msg").text("正在验证中....");
+					return true;// true则继续发送请求
 				}
 			})
 		})
@@ -77,17 +83,23 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<form action="workbench/index.html" class="form-horizontal" role="form">
 				<div class="form-group form-group-lg">
 					<div style="width: 350px;">
-						<input id="loginAct" class="form-control" type="text" placeholder="用户名">
+						<input id="loginAct" class="form-control" type="text" value="${cookie.loginAct.value}" placeholder="用户名">
 					</div>
 					<div style="width: 350px; position: relative;top: 20px;">
-						<input id="loginPwd" class="form-control" type="password" placeholder="密码">
+						<input id="loginPwd" class="form-control" type="password" value="${cookie.loginPwd.value}" placeholder="密码">
 					</div>
 					<div class="checkbox"  style="position: relative;top: 30px; left: 10px;">
 						<label>
-							<input id="isRemPwd" type="checkbox"> 十天内免登录
+							<c:if test="${not empty cookie.loginAct and not empty cookie.loginPwd}">
+								<input id="isRemPwd" type="checkbox" checked>
+							</c:if>
+							<c:if test="${empty cookie.loginAct or empty cookie.loginPwd}">
+								<input id="isRemPwd" type="checkbox">
+							</c:if>
+							十天内免登录
 						</label>
 						&nbsp;&nbsp;
-						<span id="msg"></span>
+						<span id="msg" style="color: red"></span>
 					</div>
 					<button id="loginBtn" type="button" class="btn btn-primary btn-lg btn-block"  style="width: 350px; position: relative;top: 45px;">登录</button>
 				</div>

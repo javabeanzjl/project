@@ -51,5 +51,37 @@
     * 添加jar包，添加依赖pom.xml
     * 添加配置文件
     * 添加静态页面资源
-    
-    
+
+## 10天免登录功能实现
+
+用户勾选复选框，isRemPwd=true,后端接收，若为true，则向外发送cookie，前端接收cookie。
+
+
+
+## 用户登录，安全退出
+
+安全退出应该删除cookie,
+
+## 登陆验证和创建市场活动
+
+在进行系统业务的访问时，应该进行登录验证，验证是否存在cookie，即是用拦截器拦截请求
+
+创建类实现HandlerInterceptor
+
+```java
+public class LoginInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandler(HttpServletRequest request,HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(Contacts.SESSION_USER);
+        if (user == null) {
+            // 用户为空，则跳转回登录界面
+            response.sendRedirect(request.getContextPath());
+           	return false;
+        }
+        return true;
+    }
+}
+```
+
+## 实现创建市场活动

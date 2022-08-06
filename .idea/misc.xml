@@ -7,6 +7,8 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/crm/pom.xml" />
+        <option value="$PROJECT_DIR$/mybatis_general_maven_plugin/pom.xml" />
+        <option value="$PROJECT_DIR$/project_java_test/pom.xml" />
       </list>
     </option>
   </component>

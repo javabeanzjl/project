@@ -6,11 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="mybatis_general_maven_plugin" />
+        <module name="project_java_test" />
         <module name="crm" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="crm" target="1.8" />
+      <module name="java_test" target="8" />
+      <module name="javase" target="8" />
+      <module name="javase_project" target="1.7" />
+      <module name="mybatis_general_maven_plugin" target="1.7" />
+      <module name="project_java_test" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
